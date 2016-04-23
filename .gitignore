@@ -60,3 +60,12 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# Database
+data/
+
+# venv 
+venv/
+
+# PyCharm
+.idea/workspace.xml
