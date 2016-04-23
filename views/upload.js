@@ -1,12 +1,6 @@
-<!DOCTYPE html>
-<html>
-        <head>
-    <title>File Upload</title>
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
-            <script>
-                $( document ).ready(function() {
+$( document ).ready(function() {
 
-                    var form = document.getElementById('file-form');
+    var form = document.getElementById('file-form');
     var fileSelect = document.getElementById('file-select');
     var uploadButton = document.getElementById('upload-button');
 
@@ -17,20 +11,20 @@
         // Update button text.
         uploadButton.innerHTML = 'Uploading...';
 
+        // The rest of the code will go here...
         // Get the selected files from the input.
         var file = fileSelect.files[0];
 
-        var form_data = new FormData();
-        form_data.append('file', file);
+        var form_data = new FormData(file);
         console.log(form_data);
         $.ajax({
             type: 'POST',
             url: '/upload',
             data: form_data,
-            contentType: false,
+            contentType: 'text/csv',
             cache: false,
             processData: false,
-            async: true,
+            async: false,
             success: function(data) {
                 console.log('Success!');
             },
@@ -38,16 +32,3 @@
     }
 
 });
-            </script>
-</head>
-<body>
-
-<p>
-<form id="file-form" method="POST">
-  <input type="file" id="file-select" name="files[]" multiple/>
-  <button type="submit" id="upload-button">Upload</button>
-</form>
-</p>
-
-</body>
-</html>
