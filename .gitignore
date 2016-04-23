@@ -68,5 +68,5 @@ data/
 venv/
 
 # PyCharm
-.idea/workspace.xml
+.idea/
 .env
