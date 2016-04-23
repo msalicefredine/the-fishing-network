@@ -11,3 +11,4 @@ requests>=2.9.1
 scipy>=0.13.0
 seaborn>=0.7.0
 virtualenv>=15.0.1
+datetime==4.1.*
