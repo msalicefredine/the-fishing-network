@@ -248,9 +248,13 @@ font-weight: bold;
   .done(function( results ) {
   console.log(results)
 
-        var accepted = results["accepted"];
-        var rejected = results["rejected"];
-        var unmatched = results["unmatched"];
+        var accepted = results.accepted;
+        var rejected = results.invalid;
+        var unmatched = results.unmatched;
+
+        console.log(accepted.length);
+        console.log(rejected.length);
+        console.log(unmatched.length);
 
         var option_string = ""
 
@@ -273,8 +277,12 @@ font-weight: bold;
             var matchDict = {};
 
             for (index in rejected) {
-                matchDict[rejected[index]] = $("#" + index + " option:selected" ).val();
+                matchDict[$("#" + index + " option:selected" ).val()] = rejected[index];
             }
+
+            $.post("#", matchDict, function(data, status) {
+                console.log("success");
+            });
 
             console.log(matchDict);
         });
