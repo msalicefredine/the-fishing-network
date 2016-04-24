@@ -22,6 +22,6 @@ class VerifyPage(object):
             resp.content_type = "text/html"
         else:
             resp.status = resp.status = falcon.HTTP_200
-            resp.body = json.dumps({'accepted': field_dict.accepted,
-                                    'invalid': field_dict.invalid,
-                                    'unmatched': field_dict.unmatched_fields})
+            resp.body = json.dumps({'accepted': field_dict.get("accepted", []),
+                                    'invalid': field_dict.get("invalid", []),
+                                    'unmatched': field_dict.get("unmatched_fields", [])})
