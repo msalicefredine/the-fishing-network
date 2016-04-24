@@ -34,13 +34,12 @@ class Operations(object):
             db = client.fishing_network
             table = db.operation
             for row in reader:
-                easy_row = row
-                locales = easy_row[12].split("|")
+                locales = row[12].split("|")
                 input = {}
                 for i in range(len(row)):
                     key = fields[i]
                     if (key != "trip_locales"):
-                        input[key] = easy_row[i]
+                        input[key] = row[i]
                     else:
                         input[key] = locales
                 table.insert(input)
