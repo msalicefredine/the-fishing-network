@@ -11,3 +11,27 @@ The web version of the Fishing Network allows users visualize fishery data that 
 
 ### Next Steps
 Coming soon, the Fishing Network will have SDKs for easy API access. The user interface will also be upgraded to support more complex queries for the data and have more detailed data plots. The Fishing Network hopes to add accounts for users to save their own information.
+
+### Dev Environment Setup
+Always dreamed of adding on to the fishing network? Here's how.
+
+##  Requirements
+Requires Python 2.7.*
+Server requires Mac or Linux
+
+1. ```git clone https://github.com/msalicefredine/the-fishing-network.git```
+2. In the repository ```virtualenv venv```
+⋅⋅* If you get an error, you may need to install virtualenv with  ```pip install virtualenv```
+3. Active your virtual environment
+⋅⋅1. Mac: ```source  venv/bin/activate```
+4. pip install -r requirements.txt
+5. If you do not have MongoDB installed locally: ```brew install mongodb```
+6. In your venv directory
+⋅⋅1. ```mkdir -p data/db```
+⋅⋅2. mongod --dbpath data/db
+7. ```Heroku local web```
+⋅⋅* If Heroku is not recognized, you may need to install the heroku toolbelt
+
+Disco @ http://localhost:5000
+
+
