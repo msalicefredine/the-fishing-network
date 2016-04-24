@@ -42,6 +42,8 @@
       background-image: none;
       background-repeat: no-repeat;
       color: white;
+      text-align:center;
+	vertical-align: middle;
       }
 
       li.active a {
@@ -122,7 +124,7 @@ margin: 20px;
 }
     </style>
 
-    <title>Upload Image</title>
+    <title>The Fishing Network - Upload Image</title>
  </head>
 
   <body>
@@ -135,13 +137,24 @@ margin: 20px;
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
+          <a class="navbar-brand" href="#">
+
+          </a>
+        </div>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
           <a class="navbar-brand" href="#">Fishing Network</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li><a href="/home">Home</a></li>
+            <li><a href="#">Home</a></li>
             <li><a href="/viewdatasets">View Datasets</a></li>
-            <li class="active"><a href="#contact">Upload</a></li>
+            <li class="active"><a href="/upload">Upload</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -203,27 +216,145 @@ margin: 20px;
         form_data.append('file', file);
         console.log(form_data);
 
-
+/**
         $(".upload-button").fadeOut(400, function() {
           $('#status-label').text("Upload successful. Thank you for submitting your data to Fishing Network!");
              $(".success-view").show();
-          });
+          }); **/
+
+
 
         $.ajax({
             type: 'POST',
             url: '/upload',
             data: form_data,
-            contentType: false,
             cache: false,
             processData: false,
             async: false,
             success: function(data) {
                 console.log('Success!');
+                $(".upload-button").rotate({ endDeg:90, persist:true })
+                $('#status-label').text("Upload successful. Please continue to merge your data into the database.");
             }
         });
     }
 
 });
+
+/*
+jQuery-Rotate-Plugin v0.2 by anatol.at
+http://jsfiddle.net/Anatol/T6kDR/
+*/
+$.fn.rotate=function(options) {
+  var $this=$(this), prefixes, opts, wait4css=0;
+  prefixes=['-Webkit-', '-Moz-', '-O-', '-ms-', ''];
+  opts=$.extend({
+    startDeg: false,
+    endDeg: 360,
+    duration: 1,
+    count: 1,
+    easing: 'linear',
+    animate: {},
+    forceJS: false
+  }, options);
+
+  function supports(prop) {
+    var can=false, style=document.createElement('div').style;
+    $.each(prefixes, function(i, prefix) {
+      if (style[prefix.replace(/\-/g, '')+prop]==='') {
+        can=true;
+      }
+    });
+    return can;
+  }
+
+  function prefixed(prop, value) {
+    var css={};
+    if (!supports.transform) {
+      return css;
+    }
+    $.each(prefixes, function(i, prefix) {
+      css[prefix.toLowerCase()+prop]=value || '';
+    });
+    return css;
+  }
+
+  function generateFilter(deg) {
+    var rot, cos, sin, matrix;
+    if (supports.transform) {
+      return '';
+    }
+    rot=deg>=0 ? Math.PI*deg/180 : Math.PI*(360+deg)/180;
+    cos=Math.cos(rot);
+    sin=Math.sin(rot);
+    matrix='M11='+cos+',M12='+(-sin)+',M21='+sin+',M22='+cos+',SizingMethod="auto expand"';
+    return 'progid:DXImageTransform.Microsoft.Matrix('+matrix+')';
+  }
+
+  supports.transform=supports('Transform');
+  supports.transition=supports('Transition');
+
+  opts.endDeg*=opts.count;
+  opts.duration*=opts.count;
+
+  if (supports.transition && !opts.forceJS) { // CSS-Transition
+    if ((/Firefox/).test(navigator.userAgent)) {
+      wait4css=(!options||!options.animate)&&(opts.startDeg===false||opts.startDeg>=0)?0:25;
+    }
+    $this.queue(function(next) {
+      if (opts.startDeg!==false) {
+        $this.css(prefixed('transform', 'rotate('+opts.startDeg+'deg)'));
+      }
+      setTimeout(function() {
+        $this
+          .css(prefixed('transition', 'all '+opts.duration+'s '+opts.easing))
+          .css(prefixed('transform', 'rotate('+opts.endDeg+'deg)'))
+          .css(opts.animate);
+      }, wait4css);
+
+      setTimeout(function() {
+        $this.css(prefixed('transition'));
+        if (!opts.persist) {
+          $this.css(prefixed('transform'));
+        }
+        next();
+      }, (opts.duration*1000)-wait4css);
+    });
+
+  } else { // JavaScript-Animation + filter
+    if (opts.startDeg===false) {
+      opts.startDeg=$this.data('rotated') || 0;
+    }
+    opts.animate.perc=100;
+
+    $this.animate(opts.animate, {
+      duration: opts.duration*1000,
+      easing: $.easing[opts.easing] ? opts.easing : '',
+      step: function(perc, fx) {
+        var deg;
+        if (fx.prop==='perc') {
+          deg=opts.startDeg+(opts.endDeg-opts.startDeg)*perc/100;
+          $this
+            .css(prefixed('transform', 'rotate('+deg+'deg)'))
+            .css('filter', generateFilter(deg));
+        }
+      },
+      complete: function() {
+        if (opts.persist) {
+          while (opts.endDeg>=360) {
+            opts.endDeg-=360;
+          }
+        } else {
+          opts.endDeg=0;
+          $this.css(prefixed('transform'));
+        }
+        $this.css('perc', 0).data('rotated', opts.endDeg);
+      }
+    });
+  }
+
+  return $this;
+};
             </script>
   </body>
 </html>

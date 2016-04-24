@@ -1,4 +1,5 @@
 import falcon
+import json
 
 class UploadPage(object):
     file_count = 0
@@ -17,3 +18,4 @@ class UploadPage(object):
         self.file_count += 1
 
         resp.status = falcon.HTTP_200
+        resp.body = json.dumps({})
