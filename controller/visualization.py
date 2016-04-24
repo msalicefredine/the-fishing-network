@@ -10,6 +10,7 @@ import json
 import pygal
 
 from homeDataset import HomeDataset
+from species import Species
 
 import falcon
 
@@ -27,9 +28,9 @@ class VisualizationPage(object):
 
 
         # plotnum = req.get_param('plotnum')
-        plotnum = 3
+        plotnum = 4
 
-        # SPORT FISHING BY FISH TYPE
+        # SPORT HARVEST BY FISH TYPE
         if plotnum == 1:
             home_dataset = HomeDataset()
 
@@ -68,8 +69,10 @@ class VisualizationPage(object):
             bar_chart_sport.render_to_file('bar_chart.svg')
 
             resp.status = falcon.HTTP_200
-            resp.body = str(bar_chart_sport.render_data_uri())
-            return bar_chart_sport.render_data_uri()
+            # resp.body = str(bar_chart_sport.render_data_uri())
+            resp.body = bar_chart_sport.render_data_uri()
+            # return bar_chart_sport.render_data_uri()
+        # NON TREATY HARVEST BY FISH TYPE
         elif plotnum == 2:
              home_dataset = HomeDataset()
 
@@ -109,8 +112,10 @@ class VisualizationPage(object):
              bar_chart_nontreaty.render_to_file('bar_chart.svg')
 
              resp.status = falcon.HTTP_200
-             resp.body = str(df_nontreaty.to_string())
-             return bar_chart_nontreaty.render_data_uri()
+             resp.body = bar_chart_nontreaty.render_data_uri()
+             # resp.body = str(df_nontreaty.to_string())
+             # return bar_chart_nontreaty.render_data_uri()
+        # TREATY HARVEST BY FISH TYPE
         elif plotnum == 3:
             home_dataset = HomeDataset()
 
@@ -125,7 +130,7 @@ class VisualizationPage(object):
                         to_int(j['CHUM']), to_int(j['PINK']), to_int(j['SOCKEYE']), to_int(j['STEELHEAD'])]
                 df.loc[len(df)] = vals
 
-            # sport catches
+            # treaty catches
             df_treaty = df[df['Fisher Type'] == 'Treaty']
 
             years = df_treaty['Year'].tolist()
@@ -150,10 +155,36 @@ class VisualizationPage(object):
             bar_chart_treaty.render_to_file('bar_chart.svg')
 
             resp.status = falcon.HTTP_200
-            resp.body = str(df_treaty.to_string())
-            return bar_chart_treaty.render_data_uri()
+            # resp.body = str(df_treaty.to_string())
+            resp.body = bar_chart_treaty.render_data_uri()
+            # resp.body = str(type(bar_chart_treaty.render_data_uri()))
+            # return bar_chart_treaty.render_data_uri()
+        #
+        elif plotnum == 4:
+            species = Species()
 
-        
+            data = species.get_data()
+
+            df = pd.DataFrame(
+                columns = ('DATE_COL','FINAL_NAME','FINAL_CT')
+            )
+
+            cnt = 0
+            for row in data:
+                cnt = cnt + 1
+                j = json.loads(row)
+                if j['FINAL_NAME'] in ('ORANGETHROAT DARTER','SUCKERMOUTH MINNOW','SAND SHINER','RED SHINER','COMMON CARP','LARGEMOUTH BASS','CREEK CHUB','FATHEAD MINNOW','GREEN SUNFISH','CENTRAL STONEROLLER'):
+                    vals = [j['DATE_COL'],j['FINAL_NAME'],to_int(j['FINAL_CT'])]
+                    df.loc[len(df)] = vals
+                # if cnt == 2500:
+                #     break
+
+            resp.status = falcon.HTTP_200
+            resp.body = str(df.to_string())
+            # resp.body = str(list(set(df['FINAL_NAME'].tolist())))
+
+            pass
+
 
         # import matplotlib as mpl
 

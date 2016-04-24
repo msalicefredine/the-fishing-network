@@ -37,3 +37,15 @@ class Species():
 
         resp.status = falcon.HTTP_201
         resp.location = '/species'
+
+    def get_data(self):
+        client = MongoClient("localhost:27017")
+        db = client.fishing_network
+        table = db.species
+
+        results = []
+        for doc in table.find():
+            json_doc = json.dumps(doc, default=json_util.default)
+            results.append(json_doc)
+
+        return results
