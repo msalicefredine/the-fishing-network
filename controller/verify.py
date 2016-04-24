@@ -12,7 +12,7 @@ class VerifyPage(object):
     def on_get(self, req, resp, filename):
         resp.status = falcon.HTTP_200  # This is the default status
         info = self.delegate.info_for_filename.get(filename, None)
-        field_dict = self.delegate.info_for_filename
+        field_dict = self.delegate.info_for_filename[filename]
 
         if req.params.get("load_data", None) is None:
             resp.status = falcon.HTTP_200  # This is the default status
