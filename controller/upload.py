@@ -15,7 +15,7 @@ class UploadPage(object):
         resp.content_type = "text/html"
 
     def on_post(self, req, resp):
-        file_name = 'user_uploads/user_file' + str(self.file_count) + '.csv'
+        file_name = 'user_file' + str(self.file_count) + '.csv'
         outfile = open(file_name, 'w')
         outfile.write(req.stream.read())
         outfile.close()
