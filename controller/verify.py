@@ -10,3 +10,6 @@ class VerifyPage(object):
     def on_get(self, req, resp, filename):
         resp.status = falcon.HTTP_200  # This is the default status
         info = self.delegate.info_for_filename.get(filename, None)
+        page = open('views/verify.html', 'r')
+        resp.stream = page
+        resp.content_type = "text/html"
