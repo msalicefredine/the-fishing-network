@@ -1,5 +1,6 @@
 import falcon
 import csv
+import json
 
 class UploadPage(object):
     file_count = 0
@@ -19,6 +20,8 @@ class UploadPage(object):
         self.file_count += 1
         self.parse_file(file_name)
         resp.status = falcon.HTTP_200
+        resp.body = json.dumps({})
+
 
     def clean_file(self, file_name):
         print "cleaning file\n"
@@ -126,3 +129,4 @@ class FieldDictionary(object):
         self.accepted = [] # the list we will pass to the client of found field names
         self.invalid = [] # the list of field names that did not map to anything.
         self.unmatched_fields = FieldDictionary.field_names #remaining fields that haven't been mapped to.
+

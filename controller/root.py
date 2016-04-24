@@ -6,4 +6,6 @@ class HomePage(object):
     def on_get(self, req, resp):
         """Handles GET requests"""
         resp.status = falcon.HTTP_200  # This is the default status
-        resp.body = ('\nHello, world! You found a page.\n')
+        page = open('index.html', 'r')
+        resp.stream = page
+        resp.content_type = "text/html"
