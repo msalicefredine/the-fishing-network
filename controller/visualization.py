@@ -4,6 +4,8 @@ import os
 import uuid
 import mimetypes
 
+import pygal
+
 import falcon
 
 class VisualizationPage(object):
@@ -11,16 +13,31 @@ class VisualizationPage(object):
     #     self.storage_path = storage_path
 
     def on_get(self,req,resp):
+        import numpy as np
+        import pandas as pd
+        # import matplotlib as mpl
+
+        # import matplotlib.pyplot as plt
+        # import seaborn as sns
+
         # outfile = open('user_uploads/user_file' + str(self.file_count) + '.csv', 'w')
         # outfile.write(req.stream.read())
+
+        bar_chart = pygal.Bar()  # Then create a bar graph object
+        bar_chart.add('Fibonacci', [0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55])  # Add some values
+        bar_chart.render_to_file('/tmp/bar_chart.svg')
+        bar_chart.render_to_png('/tmp/bar_chart.png')
+
         outfile = open('/tmp/test.txt','w')
-        outfile.write('hello world!\n')
+        outfile.write('\nHey! You have landed on the viz page!\n')
         outfile.close()
         infile = open('/tmp/test.txt','r')
         content = infile.read()
         infile.close()
         resp.status = falcon.HTTP_200
-        resp.body = content#('\nHey you! You have landed on the viz page!\n')
+        resp.body = bar_chart.render_data_uri()
+
+        # resp.body = content#('\nHey you! You have landed on the viz page!\n')
 
 
     def on_post(self, req, resp):
