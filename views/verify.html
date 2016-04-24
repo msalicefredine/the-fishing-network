@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+        <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+
+    <style>
+    #action-wrapper {
+    text-align: center;
+    }
+
+      .upload-button {
+        background: url('http://i1015.photobucket.com/albums/af276/anyamcgee/upload_zps8o7hvw80.png');
+        height: 260px;
+        width: 291px;
+        border-style:none;
+        display: none;
+      }
+
+      #action-button {
+      height: 260px;
+        width: 291px;
+        }
+
+      .select-file-button {
+      background: url('http://i1015.photobucket.com/albums/af276/anyamcgee/folder_zpsydv41hhx.png');
+      }
+
+      body {
+      padding-top:50px
+      }
+
+      .navbar-inverse {
+      background-color: #3f51b5;
+      background-image: none;
+      background-repeat: no-repeat;
+      color: white;
+      text-align:center;
+	vertical-align: middle;
+      }
+
+      li.active a {
+
+      }
+
+.navbar-inverse .navbar-nav > li > a:hover,
+.navbar-inverse .navbar-nav > li > a:focus {
+background-color: #5c6bc0;
+    color: white;
+}
+
+.navbar-inverse .navbar-nav > li > a,
+.navbar-inverse .navbar-brand {
+color: white;
+}
+.navbar-inverse .navbar-nav > .active > a,
+.navbar-inverse .navbar-nav > .active > a:hover,
+.navbar-inverse .navbar-nav > .active > a:focus {
+    background-color: #3949ab;
+      color: white;
+}
+
+.banner {
+  text-align: center;
+  padding-top: 100px;
+  padding-bottom: 100px;
+}
+
+.inputfile {
+	width: 0.1px;
+	height: 0.1px;
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+
+.inputfile + label {
+    font-size: 1.25em;
+    font-weight: 700;
+    color: black;
+    height: 178px;
+    width: 242px;
+    background: url('http://i1015.photobucket.com/albums/af276/anyamcgee/folder_zpsydv41hhx.png');
+    background-repeat: none;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+}
+
+.inputfile + label {
+	cursor: pointer; /* "hand" cursor */
+}
+
+.success-view {
+  background-image: url('http://i1015.photobucket.com/albums/af276/anyamcgee/success_zpsnjc5z1mm.png');
+   height: 250px;
+    width: 291px;
+  display: none;
+  border-style:none;
+  background-color: transparent;
+}
+
+li, p, div {
+font-family: "Avenir";
+}
+
+h1, .navbar-brand {
+font-weight: 200;
+}
+
+p {
+font-weight: thin;
+font-size: 16px;
+margin: 20px;
+}
+
+#accepted-column{ float: left; width: 33%; }
+#unmatched-column{ float: right; width: 33%; }
+#rejected-column{ display: inline-block; width: 33%; }
+
+.dataset-listing {
+height: 50px;
+font-size: 24px;
+padding-top: 5px;
+margin-top:10px;
+margin-bottom: 10px
+width: 400px;
+text-transform: uppercase;
+letter-spacing: 1px;
+font-weight: bold;
+}
+
+.active {
+background-color: #e8eaf6;
+}
+
+ul {
+ list-style-type: none;
+}
+
+.blue {
+background-color:#03a9f4;
+border: 0px;
+border-radius: 4px;
+padding: 10px;
+width: 200px;
+color: white;
+text-transform: uppercase;
+letter-spacing: 1px;
+font-weight: bold;
+}
+    </style>
+
+    <title>The Fishing Network - Upload Image</title>
+ </head>
+
+  <body>
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">
+
+          </a>
+        </div>
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Fishing Network</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#">Home</a></li>
+            <li><a href="/viewdatasets">View Datasets</a></li>
+            <li class="active"><a href="/upload">Upload</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    <div class="container">
+
+      <div class="banner">
+
+        <h1>Verify Data Upload</h1>
+      </div>
+
+<div id="accepted-column">
+    <p>Accepted columns</p>
+    <ul id="accepted">
+
+    </ul>
+    </div>
+
+        <div id="rejected-column">
+            <p>We couldn't find a match for these columns</p>
+            <ul id="rejected">
+
+            </ul>
+            </div>
+
+        <div id="unmatched-column">
+            <p>Possible column matches</p>
+            <ul id="unmatched">
+
+            </ul>
+            </div>
+
+
+      </div>
+
+  <div class="banner">
+      <button class="blue" id="continue">Continue</button>
+      </div>
+
+
+    </div> <!-- /container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+            <script>
+                $( document ).ready(function() {
+
+                $.get( "#", { "load_data": true } )
+  .done(function( results ) {
+  console.log(results)
+
+        var accepted = results.accepted;
+        var rejected = results.invalid;
+        var unmatched = results.unmatched;
+
+        console.log(accepted.length);
+        console.log(rejected.length);
+        console.log(unmatched.length);
+
+        var option_string = ""
+
+        for (index in unmatched) {
+            option_string += "<option value=\"" + unmatched[index] + "\">" + unmatched[index] + "</option>";
+        }
+
+        option_string += "</select>";
+
+        for (index in accepted) {
+            $("#accepted").append("<li class=\"dataset-listing\">" + accepted[index] + "</li>");
+        }
+
+        for (index in rejected) {
+            $("#rejected").append("<li class=\"dataset-listing\">" + rejected[index]+ "</li>");
+            $("#unmatched").append("<li class=\"dataset-listing\">" + "<select id=\"" +index + "\">" + option_string + "</li>");
+        }
+
+        $("#continue").click(function(event) {
+            var matchDict = {};
+
+            for (index in rejected) {
+                matchDict[$("#" + index + " option:selected" ).val()] = rejected[index];
+            }
+
+            $.post("#", matchDict, function(data, status) {
+                console.log("success");
+            });
+
+            console.log(matchDict);
+        });
+
+});
+
+});
+</script>
+  </body>
+</html>
