@@ -70,3 +70,8 @@ venv/
 # PyCharm
 .idea/
 .env
+
+controller/__init__.py
+user_uploads/*
+images/
+
