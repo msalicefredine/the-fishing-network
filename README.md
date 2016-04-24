@@ -19,16 +19,16 @@ Server requires Mac or Linux
 
 1. ```git clone https://github.com/msalicefredine/the-fishing-network.git```
 2. In the repository ```virtualenv venv```
-⋅⋅* If you get an error, you may need to install virtualenv with  ```pip install virtualenv```
+..* If you get an error, you may need to install virtualenv with  ```pip install virtualenv```
 3. Active your virtual environment
-⋅⋅1. Mac: ```source  venv/bin/activate```
+..1. Mac: ```source  venv/bin/activate```
 4. pip install -r requirements.txt
 5. If you do not have MongoDB installed locally: ```brew install mongodb```
 6. In your venv directory
-⋅⋅1. ```mkdir -p data/db```
-⋅⋅2. mongod --dbpath data/db
+..1. ```mkdir -p data/db```
+..2. mongod --dbpath data/db
 7. ```Heroku local web```
-⋅⋅* If Heroku is not recognized, you may need to install the heroku toolbelt
+..* If Heroku is not recognized, you may need to install the heroku toolbelt
 
 Disco @ http://localhost:5000
 
