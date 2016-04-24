@@ -55,26 +55,6 @@ ul {
  list-style-type: none;
 }
 
-.dataset-listing {
-height: 100px;
-padding-left: 20px;
-font-size: 24px;
-padding-top: 30px;
-border: 4px solid #03A9F4;
-border-left: 20px solid #03A9F4;
-border-radius: 4px;
-margin-top:10px;
-margin-bottom: 15px
-width: 400px;
-cursor: pointer; /* "hand" cursor */
-text-transform: uppercase;
-letter-spacing: 1px;
-font-weight: bold;
-}
-
-.active {
-background-color: #e8eaf6;
-}
 
 li, p, div {
 font-family: "Avenir";
@@ -121,11 +101,11 @@ margin-bottom: 20px;
     <div class="container">
 
       <div class="banner">
-        <h1>View Datasets</h1>
+        <h1>Dataset</h1>
       </div>
         <div id="content">
             <p>
-                Hello here are some datasets please look at them many thanks
+                Hello here is a dataset
             </p>
             <ul id="display-data">
             </ul>
@@ -142,29 +122,10 @@ margin-bottom: 20px;
   <script>
 $( document ).ready(function() {
 
-$.get( "/viewdatasets", { get_tables: true } )
-  .done(function( results ) {
-  console.log(results)
-    for (index in results) {
-    $("#display-data").append("<li class=\"dataset-listing\">" + results[index] + "</li>");
-    }
 
-    $(".dataset-listing").hover( function(event) {
-       $(".dataset-listing").addClass("active");
-       $(this).addClass('active').siblings('.active').removeClass('active');
-  }, function(event) {
-  $(this).removeClass("active");
-  });
-
-    $(".dataset-listing").click(function(event) {
-    console.log("clicked");
-        location.href = "/viewdatasets/" + $(this).text();
-    });
 
 
   });
-
-
 
 
 

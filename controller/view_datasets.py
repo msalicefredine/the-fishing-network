@@ -20,5 +20,4 @@ class ViewDatasetsPage(object):
         client = MongoClient("localhost:27017")
         db = client.fishing_network
         names = db.collection_names(include_system_collections = False)
-        names.remove('home_page')
         return json.dumps(names)

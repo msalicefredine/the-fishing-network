@@ -11,6 +11,7 @@ from controller.catches import Catches
 from controller.species import Species
 from controller.view_datasets import ViewDatasetsPage
 from controller.homeDataset import HomeDataset
+from controller.dataset_detail_view import DatasetDetailView
 
 app = falcon.API()
 
@@ -30,6 +31,9 @@ app.add_route('/visualization',visualization)
 
 view_datasets = ViewDatasetsPage()
 app.add_route('/viewdatasets', view_datasets)
+
+detail_view = DatasetDetailView()
+app.add_route('/viewdatasets/{name}', detail_view)
 
 # establish getting and posting operations data routes
 operations = Operations()
