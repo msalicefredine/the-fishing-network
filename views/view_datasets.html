@@ -51,6 +51,46 @@ color: white;
   padding-bottom: 100px;
 }
 
+ul {
+ list-style-type: none;
+}
+
+.dataset-listing {
+height: 100px;
+padding-left: 20px;
+font-size: 24px;
+padding-top: 30px;
+border: 4px solid #03A9F4;
+border-left: 20px solid #03A9F4;
+border-radius: 4px;
+margin-top:10px;
+margin-bottom: 15px
+width: 400px;
+cursor: pointer; /* "hand" cursor */
+text-transform: uppercase;
+letter-spacing: 1px;
+font-weight: bold;
+}
+
+.active {
+background-color: #e8eaf6;
+}
+
+li, p, div {
+font-family: "Avenir";
+}
+
+h1, .navbar-brand {
+font-weight: 200;
+}
+
+p {
+font-weight: thin;
+font-size: 16px;
+margin-left: 40px;
+margin-bottom: 20px;
+}
+
 
     </style>
 
@@ -81,12 +121,15 @@ color: white;
     <div class="container">
 
       <div class="banner">
-
         <h1>View Datasets</h1>
       </div>
-
-
-
+        <div id="content">
+            <p>
+                Hello here are some datasets please look at them many thanks
+            </p>
+            <ul id="display-data">
+            </ul>
+        </div>
     </div> <!-- /container -->
 
 
@@ -96,5 +139,31 @@ color: white;
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <!-- Latest compiled and minified JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  <script>
+$( document ).ready(function() {
+
+$.get( "/viewdatasets", { get_tables: true } )
+  .done(function( results ) {
+  console.log(results)
+    for (index in results) {
+    $("#display-data").append("<li class=\"dataset-listing\">" + results[index] + "</li>");
+    }
+
+    $(".dataset-listing").hover( function(event) {
+       $(".dataset-listing").addClass("active");
+       $(this).addClass('active').siblings('.active').removeClass('active');
+       console.log("Hover in");
+  }, function(event) {
+  $(this).removeClass("active");
+  });
+
+
+  });
+
+
+
+});
+  </script>
+
   </body>
 </html>
