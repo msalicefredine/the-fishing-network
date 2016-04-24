@@ -26,36 +26,134 @@ class VisualizationPage(object):
                 return int(integer_string)
 
 
-        home_dataset = HomeDataset()
+        # plotnum = req.get_param('plotnum')
+        plotnum = 3
 
-        data = home_dataset.get_data()
+        # SPORT FISHING BY FISH TYPE
+        if plotnum == 1:
+            home_dataset = HomeDataset()
 
-        df = pd.DataFrame(columns=('Year', 'Fisher Type', 'CHINOOK', 'COHO',  'CHUM',  'PINK', 'SOCKEYE', 'STEELHEAD'))
+            data = home_dataset.get_data()
 
-        for row in data:
-            j = json.loads(row)
-            vals = [to_int(j['Year']), j['Fisher Type'], to_int(j['CHINOOK']), to_int(j['COHO']),  to_int(j['CHUM']),  to_int(j['PINK']), to_int(j['SOCKEYE']), to_int(j['STEELHEAD'])]
-            df.loc[len(df)] = vals
+            df = pd.DataFrame(columns=('Year', 'Fisher Type', 'CHINOOK', 'COHO',  'CHUM',  'PINK', 'SOCKEYE', 'STEELHEAD'))
 
-        # sport catches
-        df_sport = df[df['Fisher Type']=='Sport']
+            for row in data:
+                j = json.loads(row)
+                vals = [to_int(j['Year']), j['Fisher Type'], to_int(j['CHINOOK']), to_int(j['COHO']),  to_int(j['CHUM']),  to_int(j['PINK']), to_int(j['SOCKEYE']), to_int(j['STEELHEAD'])]
+                df.loc[len(df)] = vals
 
-        years = df_sport['Year'].tolist()
-        chinook = df_sport['CHINOOK'].tolist()
-        coho = df_sport['COHO'].tolist()
+            # sport catches
+            df_sport = df[df['Fisher Type']=='Sport']
 
-        bar_chart_sport = pygal.StackedBar(x_label_rotation=270)
-        bar_chart_sport.add('Chinook',chinook)
-        bar_chart_sport.add('Coho', coho)
-        bar_chart_sport.x_labels = map(str,map(int,years))
+            years = df_sport['Year'].tolist()
+            chinook = df_sport['CHINOOK'].tolist()
+            coho = df_sport['COHO'].tolist()
+            chum = df_sport['CHUM'].tolist()
+            pink = df_sport['PINK'].tolist()
+            sockeye = df_sport['SOCKEYE'].tolist()
+            steelhead = df_sport['STEELHEAD'].tolist()
 
-        bar_chart_sport.render_data_uri()
-        bar_chart_sport.render_to_file('bar_chart.svg')
 
-        resp.status = falcon.HTTP_200
-        resp.body = str(bar_chart_sport.render_data_uri())
+            bar_chart_sport = pygal.StackedBar(x_label_rotation=270)
+            bar_chart_sport.title = "Sport Fishing Since 1974 by Fish Type"
+            bar_chart_sport.add('Chinook',chinook)
+            bar_chart_sport.add('Coho', coho)
+            bar_chart_sport.add('Chum', chum)
+            bar_chart_sport.add('Pink', pink)
+            bar_chart_sport.add('Sockeye', sockeye)
+            bar_chart_sport.add('Steelhead', steelhead)
+            bar_chart_sport.x_labels = map(str,map(int,years))
 
-        return bar_chart_sport.render_data_uri()
+            bar_chart_sport.render_data_uri()
+            bar_chart_sport.render_to_file('bar_chart.svg')
+
+            resp.status = falcon.HTTP_200
+            resp.body = str(bar_chart_sport.render_data_uri())
+            return bar_chart_sport.render_data_uri()
+        elif plotnum == 2:
+             home_dataset = HomeDataset()
+
+             data = home_dataset.get_data()
+
+             df = pd.DataFrame(
+                 columns=('Year', 'Fisher Type', 'CHINOOK', 'COHO', 'CHUM', 'PINK', 'SOCKEYE', 'STEELHEAD'))
+
+             for row in data:
+                 j = json.loads(row)
+                 vals = [to_int(j['Year']), j['Fisher Type'], to_int(j['CHINOOK']), to_int(j['COHO']),
+                         to_int(j['CHUM']), to_int(j['PINK']), to_int(j['SOCKEYE']), to_int(j['STEELHEAD'])]
+                 df.loc[len(df)] = vals
+
+             # sport catches
+             df_nontreaty = df[df['Fisher Type'] == 'Non-Treaty']
+
+             years = df_nontreaty['Year'].tolist()
+             chinook = df_nontreaty['CHINOOK'].tolist()
+             coho = df_nontreaty['COHO'].tolist()
+             chum = df_nontreaty['CHUM'].tolist()
+             pink = df_nontreaty['PINK'].tolist()
+             sockeye = df_nontreaty['SOCKEYE'].tolist()
+             steelhead = df_nontreaty['STEELHEAD'].tolist()
+
+             bar_chart_nontreaty = pygal.StackedBar(x_label_rotation=270)
+             bar_chart_nontreaty.title = "Non Treaty Fishing Since 1974 by Fish Type"
+             bar_chart_nontreaty.add('Chinook', chinook)
+             bar_chart_nontreaty.add('Coho', coho)
+             bar_chart_nontreaty.add('Chum', chum)
+             bar_chart_nontreaty.add('Pink', pink)
+             bar_chart_nontreaty.add('Sockeye', sockeye)
+             bar_chart_nontreaty.add('Steelhead', steelhead)
+             bar_chart_nontreaty.x_labels = map(str, map(int, years))
+
+             bar_chart_nontreaty.render_data_uri()
+             bar_chart_nontreaty.render_to_file('bar_chart.svg')
+
+             resp.status = falcon.HTTP_200
+             resp.body = str(df_nontreaty.to_string())
+             return bar_chart_nontreaty.render_data_uri()
+        elif plotnum == 3:
+            home_dataset = HomeDataset()
+
+            data = home_dataset.get_data()
+
+            df = pd.DataFrame(
+                columns=('Year', 'Fisher Type', 'CHINOOK', 'COHO', 'CHUM', 'PINK', 'SOCKEYE', 'STEELHEAD'))
+
+            for row in data:
+                j = json.loads(row)
+                vals = [to_int(j['Year']), j['Fisher Type'], to_int(j['CHINOOK']), to_int(j['COHO']),
+                        to_int(j['CHUM']), to_int(j['PINK']), to_int(j['SOCKEYE']), to_int(j['STEELHEAD'])]
+                df.loc[len(df)] = vals
+
+            # sport catches
+            df_treaty = df[df['Fisher Type'] == 'Treaty']
+
+            years = df_treaty['Year'].tolist()
+            chinook = df_treaty['CHINOOK'].tolist()
+            coho = df_treaty['COHO'].tolist()
+            chum = df_treaty['CHUM'].tolist()
+            pink = df_treaty['PINK'].tolist()
+            sockeye = df_treaty['SOCKEYE'].tolist()
+            steelhead = df_treaty['STEELHEAD'].tolist()
+
+            bar_chart_treaty = pygal.StackedBar(x_label_rotation=270)
+            bar_chart_treaty.title = "Treaty Fishing Since 1974 by Fish Type"
+            bar_chart_treaty.add('Chinook', chinook)
+            bar_chart_treaty.add('Coho', coho)
+            bar_chart_treaty.add('Chum', chum)
+            bar_chart_treaty.add('Pink', pink)
+            bar_chart_treaty.add('Sockeye', sockeye)
+            bar_chart_treaty.add('Steelhead', steelhead)
+            bar_chart_treaty.x_labels = map(str, map(int, years))
+
+            bar_chart_treaty.render_data_uri()
+            bar_chart_treaty.render_to_file('bar_chart.svg')
+
+            resp.status = falcon.HTTP_200
+            resp.body = str(df_treaty.to_string())
+            return bar_chart_treaty.render_data_uri()
+
+        
 
         # import matplotlib as mpl
 
