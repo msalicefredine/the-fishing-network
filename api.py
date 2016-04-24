@@ -7,6 +7,8 @@ from controller.things import ThingsResource
 from controller.upload import UploadPage
 from controller.visualization import VisualizationPage
 from controller.operations import Operations
+from controller.catches import Catches
+from controller.species import Species
 
 app = falcon.API()
 
@@ -26,3 +28,11 @@ app.add_route('/visualization',visualization)
 # establish getting and posting operations data routes
 operations = Operations()
 app.add_route('/operations', operations)
+
+#establish get and post route for catch data
+catches = Catches()
+app.add_route('/catches', catches)
+
+# establish get/post routes for species data
+species = Species()
+app.add_route('/species', species)
