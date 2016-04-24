@@ -1,9 +1,5 @@
-# the-fishing-network
-Collaborating on web client for collecting and standardizing fishing information on a global scale.
-
-
-### The Fishing Network
-The web version of the Fishing Network allows users visualize fishery data that has been inputted by a variety of users. Currently, the Fishing Network supports uploading csv files of fishing data to the database and even has a csv formatter to help users correctly input the data. There is also a <a rel="license" href="https://github.com/Danagregg/the-fishing-network-mobile">mobile app</a> to allow users to input data.
+# The Fishing Network
+Collaborating on web client for collecting and standardizing fishing information on a global scale. The web version of the Fishing Network allows users visualize fishery data that has been inputted by a variety of users. Currently, the Fishing Network supports uploading csv files of fishing data to the database and even has a csv formatter to help users correctly input the data. There is also a <a rel="license" href="https://github.com/Danagregg/the-fishing-network-mobile">mobile app</a> to allow users to input data.
 
 ### Next Steps
 Coming soon, the Fishing Network will have SDKs for easy API access. The user interface will also be upgraded to support more complex queries for the data and have more detailed data plots. The Fishing Network hopes to add accounts for users to save their own information.
