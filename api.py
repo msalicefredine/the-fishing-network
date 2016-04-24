@@ -10,6 +10,7 @@ from controller.operations import Operations
 from controller.catches import Catches
 from controller.species import Species
 from controller.view_datasets import ViewDatasetsPage
+from controller.homeDataset import HomeDataset
 
 app = falcon.API()
 
@@ -41,3 +42,6 @@ app.add_route('/catches', catches)
 # establish get/post routes for species data
 species = Species()
 app.add_route('/species', species)
+
+homeData = HomeDataset()
+app.add_route('/homeData', homeData)
