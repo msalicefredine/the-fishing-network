@@ -27,8 +27,8 @@ class VisualizationPage(object):
                 return int(integer_string)
 
 
-        # plotnum = req.get_param('plotnum')
-        plotnum = 4
+        plotnum = req.get_param('plotnum')
+        #plotnum = 4
 
         # SPORT HARVEST BY FISH TYPE
         if plotnum == 1:

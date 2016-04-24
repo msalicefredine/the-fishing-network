@@ -158,6 +158,11 @@ text-transform: uppercase;
 letter-spacing: 1px;
 font-weight: bold;
 }
+
+#success {
+display: none;
+text-align: center;
+}
     </style>
 
     <title>The Fishing Network - Upload Image</title>
@@ -202,6 +207,13 @@ font-weight: bold;
         <h1>Verify Data Upload</h1>
       </div>
 
+        <div id="success">
+            <p>
+            <img src="http://i1015.photobucket.com/albums/af276/anyamcgee/success_zpsnjc5z1mm.png">
+            Image upload was successful</p>
+        </div>
+        <div id="columns">
+
 <div id="accepted-column">
     <p>Accepted columns</p>
     <ul id="accepted">
@@ -224,11 +236,14 @@ font-weight: bold;
             </div>
 
 
-      </div>
+
+
 
   <div class="banner">
       <button class="blue" id="continue">Continue</button>
       </div>
+         <div>
+             </div>
 
 
     </div> <!-- /container -->
@@ -281,8 +296,12 @@ font-weight: bold;
             }
 
             $.post("#", matchDict, function(data, status) {
-                console.log("success");
+
             });
+
+             $("#columns").fadeOut(400, function() {
+                    $("#success").show();
+                });
 
             console.log(matchDict);
         });
