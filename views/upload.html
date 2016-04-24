@@ -233,8 +233,12 @@ margin: 20px;
             async: false,
             success: function(data) {
                 console.log('Success!');
+                console.log(data);
                 $(".upload-button").rotate({ endDeg:90, persist:true })
                 $('#status-label').text("Upload successful. Please continue to merge your data into the database.");
+                $(".upload-button").click(function(event) {
+
+                });
             }
         });
     }

@@ -11,6 +11,7 @@ from controller.catches import Catches
 from controller.species import Species
 from controller.view_datasets import ViewDatasetsPage
 from controller.homeDataset import HomeDataset
+from controller.verify import VerifyPage
 
 app = falcon.API()
 
@@ -24,6 +25,9 @@ app.add_route('/things', test)
 
 upload = UploadPage()
 app.add_route('/upload', upload)
+
+verify = VerifyPage(upload)
+app.add_route('/verify/{filename}', verify)
 
 visualization = VisualizationPage()
 app.add_route('/visualization',visualization)

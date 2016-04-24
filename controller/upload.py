@@ -4,6 +4,7 @@ import json
 
 class UploadPage(object):
     file_count = 0
+    info_for_filename = {}
 
     def on_get(self, req, resp):
         resp.status = falcon.HTTP_200  # This is the default status
@@ -19,9 +20,10 @@ class UploadPage(object):
         outfile.close()
         self.file_count += 1
         fd = FieldDictionary()
-        self.parse_file(file_name, fd)
+        fd = self.parse_file(file_name, fd)
         resp.status = falcon.HTTP_200
-        resp.body = json.dumps({})
+        self.info_for_filename[file_name] = fd
+        resp.body = json.dumps({'filename': file_name})
 
 
     def clean_file(self, file_name):
@@ -67,6 +69,7 @@ class UploadPage(object):
             else:
                 fd.invalid.append(field)
         f.close()
+        return fd
         # f.readlines()
         # f.write("\nAccepted: ")
         # f.writelines(fd.accepted)
