@@ -34,22 +34,15 @@ class Operations(object):
             db = client.fishing_network
             table = db.operation
             for row in reader:
-                locales = row[12].split("|")
-                input = {
-                    fields[0]: row[0],
-                    fields[1]: row[1],
-                    fields[2]: row[2],
-                    fields[3]: row[3],
-                    fields[4]: row[4],
-                    fields[5]: row[5],
-                    fields[6]: row[6],
-                    fields[7]: row[7],
-                    fields[8]: row[8],
-                    fields[9]: row[9],
-                    fields[10]: row[10],
-                    fields[11]: row[11],
-                    fields[12]: locales
-                }
+                easy_row = row
+                locales = easy_row[12].split("|")
+                input = {}
+                for i in range(len(row)):
+                    key = fields[i]
+                    if (key != "trip_locales"):
+                        input[key] = easy_row[i]
+                    else:
+                        input[key] = locales
                 table.insert(input)
 
         resp.status = falcon.HTTP_201
