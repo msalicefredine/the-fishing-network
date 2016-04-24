@@ -18,7 +18,8 @@ class UploadPage(object):
         outfile.write(req.stream.read())
         outfile.close()
         self.file_count += 1
-        self.parse_file(file_name)
+        fd = FieldDictionary()
+        self.parse_file(file_name, fd)
         resp.status = falcon.HTTP_200
         resp.body = json.dumps({})
 
@@ -39,9 +40,8 @@ class UploadPage(object):
         f.writelines(lines)
         f.close()
 
-    def parse_file(self, file_name):
+    def parse_file(self, file_name, fd):
         self.clean_file(file_name)
-        fd = FieldDictionary()
         f = open(file_name, 'r+')
         csv_f = csv.reader(f)
         file_lines = []
@@ -66,13 +66,14 @@ class UploadPage(object):
                 # duplicate_dict[field] = field_index
             else:
                 fd.invalid.append(field)
-        f.readlines()
-        f.write("\nAccepted: ")
-        f.writelines(fd.accepted)
-        f.write("\nInvalid: ")
-        f.writelines(fd.invalid, )
-        f.write("\nUnmatched Fields: ")
-        f.writelines(fd.unmatched_fields)
+        f.close()
+        # f.readlines()
+        # f.write("\nAccepted: ")
+        # f.writelines(fd.accepted)
+        # f.write("\nInvalid: ")
+        # f.writelines(fd.invalid, )
+        # f.write("\nUnmatched Fields: ")
+        # f.writelines(fd.unmatched_fields)
         # properly handle duplicates:
         # - figure out how to send back to the
 
